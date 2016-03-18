@@ -1,0 +1,21 @@
+{
+    "name": "daltonmenezes/eventScheduler",
+    "description": "A simple event scheduler application for PHP projects",
+    "authors": [
+        {
+            "name": "Dalton Menezes",
+            "email": "daltonmenezes@outlook.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },    
+    "autoload": {
+    "psr-4": {
+      "EventScheduler\\":"src/EventScheduler/"
+    }
+  }
+}
