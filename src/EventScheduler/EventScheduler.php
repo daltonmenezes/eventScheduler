@@ -8,16 +8,16 @@ class EventScheduler
 {
 	private $schedule = array();
 	private $currentDateTime;
-	private $beforeClosure;
-	private $afterClosure;
+	private $beforeEvent;
+	private $afterEvent;
 
 	public function __construct()
 	{
-		$this->beforeClosure = array(
+		$this->beforeEvent = array(
 			"run" => function() {
 		});
 		
-		$this->afterClosure = array(
+		$this->afterEvent = array(
 			"run" => function() {
 		});
 	}
@@ -36,14 +36,14 @@ class EventScheduler
 		$this->currentDateTime = new DateTime($handlerDateTime);	
 	}
 
-	public function before(Closure $beforeClosure)
+	public function before(Closure $beforeEvent)
 	{
-		$this->beforeClosure = array("run" => $beforeClosure);
+		$this->beforeEvent = array("run" => $beforeEvent);
 	}
 
-	public function after(Closure $afterClosure)
+	public function after(Closure $afterEvent)
 	{
-		$this->afterClosure = array("run" => $afterClosure);
+		$this->afterEvent = array("run" => $afterEvent);
 	}	
 
 	public function run()
@@ -58,9 +58,9 @@ class EventScheduler
 		}
 		
 		if ($this->isStartScheduledDate()) {
-			return $this->afterClosure["run"]();
+			return $this->afterEvent["run"]();
 		}
-		return $this->beforeClosure["run"]();			
+		return $this->beforeEvent["run"]();			
 	}
 
 	private function isStartScheduledDate()
