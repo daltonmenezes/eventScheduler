@@ -1,10 +1,15 @@
 {
-    "name": "daltonmenezes/eventScheduler",
+    "name": "daltonmenezes/eventscheduler",
     "description": "A simple event scheduler application for PHP projects",
+    "keywords": ["events", "scheduler", "cron"],
+    "homepage": "https://github.com/daltonmenezes/eventScheduler",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Dalton Menezes",
-            "email": "daltonmenezes@outlook.com"
+            "email": "daltonmenezes@outlook.com",
+            "homepage": "https://www.daltonmenezes.wordpress.com"
         }
     ],
     "require": {
