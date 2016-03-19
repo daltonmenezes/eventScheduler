@@ -78,3 +78,6 @@ $event->run();
 Nothing more! It's simple! ;)
 You can read or test the [example.php](https://github.com/daltonmenezes/eventScheduler/blob/master/example.php) file at the root directory of this project.
 
+## Problems or suggestions?
+
+Open a [Issue](https://github.com/daltonmenezes/eventScheduler/issues). :)
