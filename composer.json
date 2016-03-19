@@ -25,4 +25,9 @@
       "EventScheduler\\":"src/EventScheduler/"
     }
   }
+  "extra": {
+    "branch-alias": {
+        "dev-master": "1.0.0"
+    }
+  }
 }
