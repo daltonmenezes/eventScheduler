@@ -22,9 +22,9 @@ class EventScheduler
 		});
 	}
 
-	public function schedule(Array $schedule = array(), $handlerDateTime = null)
+	public function schedule(Array $schedule = array(), $dateTimeFormat = null)
 	{
-		if ($handlerDateTime === null) {
+		if ($dateTimeFormat === null) {
 			$this->currentDateTime = new DateTime(
 				date('d-m-Y H:i')
 			);
@@ -33,7 +33,7 @@ class EventScheduler
 		$this->schedule = $schedule;
 		$this->start = new DateTime($this->schedule['start']);
 		$this->finish = new DateTime($this->schedule['finish']);
-		$this->currentDateTime = new DateTime($handlerDateTime);	
+		$this->currentDateTime = new DateTime($dateTimeFormat);	
 	}
 
 	public function before(Closure $beforeEvent)
@@ -75,5 +75,4 @@ class EventScheduler
 		}
 		return $this->currentDateTime >= $this->finish;	
 	}
-
 }
