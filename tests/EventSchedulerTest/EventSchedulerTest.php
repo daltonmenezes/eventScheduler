@@ -12,9 +12,12 @@ class EventSchedulerTest extends \PHPUnit_Framework_TestCase
 	/**
 	* @test
 	**/
-	public function beforeMustBeExecutedWhenCurrentDateIsBelowThanStartScheduledDate()
+	public function beforeEventMustBeExecutedWhenCurrentDateIsBelowThanStartScheduledDate()
 	{
-		$this->schedule = array("start" => "16-03-2017 23:45");
+		$this->schedule = array(
+			"start" => "16-03-2017 23:45",
+			"finish" => "20-03-2018 14:13"
+		);
 
 		$this->currentDate = "16-03-2016 19:20";
 
@@ -36,9 +39,12 @@ class EventSchedulerTest extends \PHPUnit_Framework_TestCase
 	/**
 	* @test
 	**/
-	public function afterMustBeExecutedWhenCurrentDateIsGreaterThanOrEqualToStartScheduledDate()
+	public function afterEventMustBeExecutedWhenCurrentDateIsGreaterThanOrEqualToStartScheduledDate()
 	{
-		$this->schedule = array("start" => "16-03-2016 19:24");
+		$this->schedule = array(
+			"start" => "16-03-2016 19:24",
+			"finish" => "20-03-2017 14:13"
+		);
 
 		$this->currentDate = "16-03-2017 19:20";
 
@@ -60,9 +66,35 @@ class EventSchedulerTest extends \PHPUnit_Framework_TestCase
 	/**
 	* @test
 	**/
-	public function beforeShouldNotBeExecutedWhenAfterIsExecuted()
+	public function afterEventShouldNotBeExecutedWhenCurrentDateIsGreaterThanOrEqualToFinishScheduledDate()
 	{
-		$this->schedule = array("start" => "16-03-2016 19:24");
+		$this->schedule = array(
+			"start" => "16-03-2016 19:24",
+			"finish" => "10-03-2017 14:13"
+		);
+
+		$this->currentDate = "10-03-2017 14:13";
+
+		$this->event->schedule($this->schedule, $this->currentDate);					
+		
+		$this->event->after(function() {
+			return "AFTER EVENT IS EXECUTED!!!";
+		});		
+
+		$this->app = $this->event->run();
+		
+		$this->assertNotEquals("AFTER EVENT IS EXECUTED!!!", $this->app);			
+	}	
+
+	/**
+	* @test
+	**/
+	public function beforeEventShouldNotBeExecutedWhenAfterEventIsExecuted()
+	{
+		$this->schedule = array(
+			"start" => "16-03-2016 19:24",
+			"finish" => "20-03-2017 14:13"
+		);
 
 		$this->currentDate = "16-03-2017 19:20";
 
@@ -74,15 +106,18 @@ class EventSchedulerTest extends \PHPUnit_Framework_TestCase
 
 		$this->app = $this->event->run();
 		
-		$this->assertNotEquals("BEFORE EVENT IS EXECUTED!!!", $this->app, "BEFORE WAS EXECUTED WHEN SHOULD NOT!");
+		$this->assertNotEquals("BEFORE EVENT IS EXECUTED!!!", $this->app, "BEFORE EVENT WAS EXECUTED WHEN SHOULD NOT!");
 	}
 
 	/**
 	* @test
 	**/
-	public function afterShouldNotBeExecutedWhenBeforeIsExecuted()
+	public function afterEventShouldNotBeExecutedWhenBeforeEventIsExecuted()
 	{
-		$this->schedule = array("start" => "16-03-2017 23:45");
+		$this->schedule = array(
+			"start" => "16-03-2017 23:45",
+			"finish" => "20-03-2017 14:13"
+		);
 
 		$this->currentDate = "16-03-2016 19:20";
 
@@ -94,7 +129,22 @@ class EventSchedulerTest extends \PHPUnit_Framework_TestCase
 
 		$this->app = $this->event->run();
 		
-		$this->assertNotEquals("AFTER EVENT IS EXECUTED!!!", $this->app, "AFTER WAS EXECUTED WHEN SHOULD NOT!");
-	}	
+		$this->assertNotEquals("AFTER EVENT IS EXECUTED!!!", $this->app, "AFTER EVENT WAS EXECUTED WHEN SHOULD NOT!");
+	}
 
+	/**
+	* @test
+	* @expectedException RuntimeException
+	* @expectedExceptionMessage The finish date should not be below than start scheduled date!
+	**/
+	public function throwExceptionWhenFinishDateIsBelowThanStartScheduledDate()
+	{
+		$this->schedule = array(
+			"start" => "16-03-2016 19:24",
+			"finish" => "10-03-2016 14:13"
+		);
+
+		$this->event->schedule($this->schedule);
+		$this->event->run();
+	}
 }

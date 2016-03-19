@@ -2,6 +2,7 @@
 namespace EventScheduler;
 use Closure;
 use DateTime;
+use RuntimeException;
 
 class EventScheduler
 {
@@ -31,6 +32,7 @@ class EventScheduler
 
 		$this->schedule = $schedule;
 		$this->start = new DateTime($this->schedule['start']);
+		$this->finish = new DateTime($this->schedule['finish']);
 		$this->currentDateTime = new DateTime($handlerDateTime);	
 	}
 
@@ -51,16 +53,27 @@ class EventScheduler
 
 	private function processExpectedBehaviors()
 	{
-		if ($this->isStartExpectedDate()) {
+		if ($this->isFinishScheduledDate()) {
+			return true;
+		}
+		
+		if ($this->isStartScheduledDate()) {
 			return $this->afterClosure["run"]();
 		}
 		return $this->beforeClosure["run"]();			
 	}
 
-	private function isStartExpectedDate()
+	private function isStartScheduledDate()
 	{
 		return $this->currentDateTime >= $this->start;	
 	}
 
+	private function isFinishScheduledDate()
+	{
+		if ($this->finish < $this->start) {
+			throw new RuntimeException("The finish date should not be below than start scheduled date!");
+		}
+		return $this->currentDateTime >= $this->finish;	
+	}
 
 }

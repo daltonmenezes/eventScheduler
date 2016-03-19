@@ -6,7 +6,10 @@ use EventScheduler\EventScheduler;
 
 $event = new EventScheduler();
 
-$schedule = array("start" => "17-04-2016 23:43");
+$schedule = array(
+	"start" => "18-03-2016 23:43",
+	"finish" => "20-03-2020 23:43"
+);
 
 $event->schedule($schedule);
 
