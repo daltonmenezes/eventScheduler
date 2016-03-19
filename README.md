@@ -9,7 +9,7 @@ The Package is available on [Packagist](https://packagist.org/packages/daltonmen
 you can install it using [Composer](http://getcomposer.org).
 
 ```bash
-composer require daltonmenezes/eventscheduler dev-master
+composer require daltonmenezes/eventscheduler
 ```
 ### Dependencies
 
