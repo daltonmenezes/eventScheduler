@@ -6,3 +6,6 @@ languages:
    
 exclude_paths:
   - tests/**/*
+addons:
+    code_climate:
+        repo_token: c6d08e577b81bfb19a6076cde4aed7afad5d40d49c1a22cdf2205db20074a19b
