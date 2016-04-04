@@ -11,6 +11,11 @@ you can install it using [Composer](http://getcomposer.org).
 ```bash
 composer require daltonmenezes/eventscheduler
 ```
+Go to the project dir and
+```bash
+composer update
+```
+
 ### Dependencies
 
 - [PHP](https://php.net) 5.3+
