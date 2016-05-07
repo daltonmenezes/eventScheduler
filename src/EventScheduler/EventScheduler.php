@@ -1,5 +1,6 @@
 <?php
 namespace EventScheduler;
+
 use Closure;
 use DateTime;
 use RuntimeException;
